@@ -1,7 +1,7 @@
-import React from 'react'
-import '../../styles/Sidebar.css'
+import React from 'react';
+import '../../styles/Sidebar.css';
 
-import NewFile from './NewFile'
+import NewFile from './NewFile';
 import SidebarItem from './SidebarItem';
 
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
@@ -12,27 +12,25 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import StorageIcon from '@material-ui/icons/Storage';
 
-const index = () => {
+const index = ({ userId }) => {
     return (
-        <div className='sidebar'>
-            <NewFile />
+        <div className="sidebar">
+            <NewFile userId={userId} />
 
             <div className="sidebar__itemsContainer">
-                <SidebarItem arrow icon={(<InsertDriveFileIcon />)} label={'My Drive'} />
-                <SidebarItem arrow icon={(<ImportantDevicesIcon />)} label={'Computers'} />
-                <SidebarItem icon={(<PeopleAltIcon />)} label={'Shared with me'} />
-                <SidebarItem icon={(<QueryBuilderIcon />)} label={'Recent'} />
-                <SidebarItem icon={(<StarBorderIcon />)} label={'Starred'} />
-                <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Bin'} />
-                
-                <hr/>
-                
-                <SidebarItem icon={(<StorageIcon />)} label={'Storage'} />
+                <SidebarItem arrow icon={<InsertDriveFileIcon />} label={'My Drive'} />
+                <SidebarItem arrow icon={<ImportantDevicesIcon />} label={'Computers'} />
+                <SidebarItem icon={<PeopleAltIcon />} label={'Shared with me'} />
+                <SidebarItem icon={<QueryBuilderIcon />} label={'Recent'} />
+                <SidebarItem icon={<StarBorderIcon />} label={'Starred'} />
+                <SidebarItem icon={<DeleteOutlineIcon />} label={'Bin'} />
 
+                <hr />
+
+                <SidebarItem icon={<StorageIcon />} label={'Storage'} />
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default index
+export default index;

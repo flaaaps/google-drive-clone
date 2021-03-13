@@ -1,12 +1,12 @@
-import React from 'react'
-import '../../styles/FileItem.css'
+import React from 'react';
+import '../../styles/FileItem.css';
 
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
-const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const FileItem = ({ id, caption, timestamp, fileUrl, size }) => {
-    const fileDate = `${timestamp?.toDate().getDate()} ${monthNames[timestamp?.toDate().getMonth() + 1]} ${timestamp?.toDate().getFullYear()}`
+const FileItem = ({ caption, timestamp, fileUrl, size }) => {
+    const fileDate = `${timestamp?.toDate().getDate()} ${monthNames[timestamp?.toDate().getMonth()]} ${timestamp?.toDate().getFullYear()}`;
 
     const getReadableFileSizeString = (fileSizeInBytes) => {
         let i = -1;
@@ -20,8 +20,8 @@ const FileItem = ({ id, caption, timestamp, fileUrl, size }) => {
     };
 
     return (
-        <div className='fileItem'>
-            <a href={fileUrl} target="_blank" download>
+        <div className="fileItem">
+            <a href={fileUrl} target="_blank" rel="noreferrer" download>
                 <div className="fileItem--left">
                     <InsertDriveFileIcon />
                     <p>{caption}</p>
@@ -32,7 +32,7 @@ const FileItem = ({ id, caption, timestamp, fileUrl, size }) => {
                 </div>
             </a>
         </div>
-    )
-}
+    );
+};
 
-export default FileItem
+export default FileItem;

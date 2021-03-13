@@ -1,18 +1,18 @@
-import React from 'react'
-import '../../styles/Header.css'
+import React from 'react';
+import '../../styles/Header.css';
 
-import GDriveLogo from '../../media/google-drive-logo.png'
+import GDriveLogo from '../../media/google-drive-logo.png';
 
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AppsIcon from '@material-ui/icons/Apps';
 
-const index = ({ userPhoto }) => {
+const index = ({ userPhoto, handleLogout }) => {
     return (
-        <div className='header'>
+        <div className="header">
             <div className="header__logo">
                 <img src={GDriveLogo} alt="Google Drive" />
                 <span>Drive</span>
@@ -20,7 +20,7 @@ const index = ({ userPhoto }) => {
             <div className="header__searchContainer">
                 <div className="header__searchBar">
                     <SearchIcon />
-                    <input type="text" placeholder='Search in Drive' />
+                    <input type="text" placeholder="Search in Drive" />
                     <ExpandMoreIcon />
                 </div>
             </div>
@@ -30,10 +30,10 @@ const index = ({ userPhoto }) => {
                     <SettingsIcon />
                 </span>
                 <AppsIcon />
-                <img src={userPhoto} alt="User Photo"/>
+                <img onClick={handleLogout} src={userPhoto} alt="User" />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default index
+export default index;

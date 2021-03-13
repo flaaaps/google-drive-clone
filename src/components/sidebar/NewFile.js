@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import '../../styles/NewFile.css'
+import React, { useState } from 'react';
+import '../../styles/NewFile.css';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import firebase from 'firebase'
-import { storage, db } from '../../firebase'
+import firebase from 'firebase';
+import { storage, db } from '../../firebase';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -28,14 +28,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-const NewFile = () => {
+const NewFile = ({ userId }) => {
     const classes = useStyles();
 
     const [modalStyle] = useState(getModalStyle);
     const [open, setOpen] = useState(false);
-    const [file, setFile] = useState(null)
-    const [uploading, setUploading] = useState(false)
+    const [file, setFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -47,67 +46,84 @@ const NewFile = () => {
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
-            setFile(e.target.files[0])
+            console.log('File');
+            const fileToUpload = e.target.files[0];
+            // validate fileToUpload.name
+            Object.defineProperty(fileToUpload, 'urlName', {
+                writable: true,
+                value: `${fileToUpload.name.replaceAll(' ', '_')}`,
+            });
+            console.log(fileToUpload);
+            setFile(fileToUpload);
         }
-    }
+    };
 
     const handleUpload = () => {
-        setUploading(true)
+        setUploading(true);
 
-        storage.ref(`files/${file.name}`).put(file).then(snapshot => {
-            console.log(snapshot)
+        console.log(file.urlName, 'URL NAME!');
 
-            storage.ref('files').child(file.name).getDownloadURL().then(url => {
-                //post image inside the db
+        storage
+            .ref(`files/${file.urlName}`)
+            .put(file)
+            .then((snapshot) => {
+                console.log(snapshot);
 
-                db.collection('myFiles').add({
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    caption: file.name,
-                    fileUrl: url,
-                    size: snapshot._delegate.bytesTransferred,
-                })
+                storage
+                    .ref('files')
+                    .child(file.urlName)
+                    .getDownloadURL()
+                    .then((url) => {
+                        //post image inside the db
 
-                setUploading(false)
-                setOpen(false)
-                setFile(null)
+                        db.collection('myFiles').add({
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            caption: file.name,
+                            fileUrl: url,
+                            size: snapshot._delegate.bytesTransferred,
+                            userId: userId,
+                        });
+
+                        setUploading(false);
+                        setOpen(false);
+                        setFile(null);
+                    });
+
+                storage
+                    .ref('files')
+                    .child(file.urlName)
+                    .getMetadata()
+                    .then((meta) => {
+                        console.log(meta.size);
+                    });
             })
-
-            storage.ref('files').child(file.name).getMetadata().then(meta => {
-                console.log(meta.size)
-            })
-
-        })
-    }
+            .catch((err) => {
+                console.log('Error while uploading...', err);
+            });
+    };
 
     return (
-        <div className='newFile'>
+        <div className="newFile">
             <div className="newFile__container" onClick={handleOpen}>
-                <AddIcon fontSize='large' />
+                <AddIcon fontSize="large" />
                 <p>New</p>
             </div>
 
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-            >
+            <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
                 <div style={modalStyle} className={classes.paper}>
                     <p>Select files you want to upload!</p>
-                    {
-                        uploading ? (
-                            <p>Uploading...</p>
-                        ) : (
-                                <>
-                                    <input type="file" onChange={handleChange} />
-                                    <button onClick={handleUpload}>Upload</button>
-                                </>
-                            )
-                    }
+                    {uploading ? (
+                        <p>Uploading...</p>
+                    ) : (
+                        <>
+                            <input type="file" onChange={handleChange} />
+                            <button onClick={handleUpload}>Upload</button>
+                        </>
+                    )}
                 </div>
             </Modal>
         </div>
-    )
-}
+    );
+};
 
-export default NewFile
+export default NewFile;

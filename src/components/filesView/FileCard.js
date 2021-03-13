@@ -1,11 +1,11 @@
-import React from 'react'
-import '../../styles/FileCard.css'
+import React from 'react';
+import '../../styles/FileCard.css';
 
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
-const FileCard = ({ name }) => {
+const FileCard = ({ name, url }) => {
     return (
-        <div className='fileCard'>
+        <a href={url} target="_blank" rel="noreferrer" className="fileCard">
             <div className="fileCard--top">
                 <InsertDriveFileIcon style={{ fontSize: 130 }} />
             </div>
@@ -13,8 +13,8 @@ const FileCard = ({ name }) => {
             <div className="fileCard--bottom">
                 <p>{name}</p>
             </div>
-        </div>
-    )
-}
+        </a>
+    );
+};
 
-export default FileCard
+export default FileCard;

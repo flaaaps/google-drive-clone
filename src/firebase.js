@@ -1,19 +1,20 @@
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyANE39sgac-2bJHy3UQ5UcCLonpJ4OfQ8A",
-    authDomain: "drive-clone-e32b9.firebaseapp.com",
-    projectId: "drive-clone-e32b9",
-    storageBucket: "drive-clone-e32b9.appspot.com",
-    messagingSenderId: "1065309532898",
-    appId: "1:1065309532898:web:58ae8cce733671b27fe4bb"
+    apiKey: 'AIzaSyAu4_nQcMRTIoYz2U1kbix7epdRGBU4cx0',
+    authDomain: 'drive-clone-456.firebaseapp.com',
+    projectId: 'drive-clone-456',
+    storageBucket: 'drive-clone-456.appspot.com',
+    messagingSenderId: '612999858179',
+    appId: '1:612999858179:web:ce0b7350076a44ea30a636',
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig)
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth()
-const provider = new firebase.auth.GoogleAuthProvider()
-const storage = firebase.storage()
-const db = firebaseApp.firestore()
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+const githubProvider = new firebase.auth.GithubAuthProvider();
+const storage = firebase.storage();
+const db = firebaseApp.firestore();
 
-export { auth, provider, db, storage }
+export { auth, provider, db, storage, githubProvider };
